@@ -1,18 +1,16 @@
-FROM java:8
+FROM centos:7
 
 ENV MIRTH_CONNECT_VERSION 3.4.2.8129.b167
 
-RUN apt-get update
+RUN yum update -y
+RUN yum install -y wget java-1.8.0-openjdk
 
-WORKDIR /usr/local/mirthconnect
+WORKDIR /opt/mirthconnect
 
-ADD templates/mirthconnect/mirthconnect-install-wrapper.sh /usr/local/mirthconnect/mirthconnect-install-wrapper.sh
+RUN wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-linux.rpm \
+ && yum install -y mirthconnect-$MIRTH_CONNECT_VERSION-linux.rpm
 
-RUN wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-unix.sh \
- && chmod +x mirthconnect-$MIRTH_CONNECT_VERSION-unix.sh \
- && ./mirthconnect-install-wrapper.sh
+EXPOSE 8080 8443
 
-EXPOSE 80 443
-
-CMD /etc/init.d/mcservice start && tail -F /opt/mirthconnect/logs/mirth.log
+CMD /opt/mirthconnect/mcservice start && tail -F /opt/mirthconnect/logs/mirth.log
 
