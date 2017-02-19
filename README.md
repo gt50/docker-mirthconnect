@@ -1,6 +1,6 @@
 Build the image and run with the following command:
 
-     docker run -p 8080:8080 -p 8443:8443  IMAGE_NAME
+     docker run -p 80:80 -p 443:443  IMAGE_NAME
 
 You can launch Mirth Connect Administrator by visiting DOCKER_IP:8080
 
