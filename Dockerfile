@@ -3,9 +3,10 @@ FROM centos:7
 ENV MIRTH_CONNECT_VERSION 3.4.2.8129.b167
 
 RUN yum update -y
-RUN yum install -y wget monit htop
+RUN yum install -y wget
 RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm && rpm -ihv epel-release-7-9.noarch.rpm \
     && rm -f epel-release-7-9.noarch.rpm
+RUN yum install -y monit htop
 
 WORKDIR /opt/mirthconnect
 
