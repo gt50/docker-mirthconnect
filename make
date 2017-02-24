@@ -1,0 +1,2 @@
+./dockerbuild.sh && ./dockerrun.sh
+
