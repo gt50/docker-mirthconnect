@@ -25,6 +25,12 @@ RUN wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconn
     && sed -i '/com.install4j.runtime.launcher.Launcher stop/a\rm /var/run/mcservice.pid' mcservice \
     && rm -f mirthconnect-$MIRTH_CONNECT_VERSION-linux.rpm
 
+RUN sed -i "\$acheck process mcservice with pidfile /var/run/mcservice.pid" /etc/monitrc \
+    && sed -i "\$a  start program = \"/opt/mirthconnect/mcservice start\" with timeout 60 seconds" /etc/monitrc \
+    && sed -i "\$a  stop program = \"/opt/mirthconnect/mcservice stop\"" /etc/monitrc \    
+    && sed -i "\$a  if cpu > 60% for 2 cycles then alert" /etc/monitrc \ 
+    && sed -i "\$a  if cpu > 90% for 5 cycles then restart" /etc/monitrc 
+
 EXPOSE 80 443
 
-CMD /opt/mirthconnect/mcservice restart && tail -F /opt/mirthconnect/logs/mirth.log
+CMD /opt/mirthconnect/mcservice restart && monit && tail -F /opt/mirthconnect/logs/mirth.log
