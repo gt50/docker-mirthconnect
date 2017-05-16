@@ -1,6 +1,6 @@
 FROM centos:7
 
-ENV MIRTH_CONNECT_VERSION 3.4.2.8129.b167
+ENV MIRTH_CONNECT_VERSION 3.5.0.8232.b2153
 
 RUN yum update -y
 RUN yum install -y wget
