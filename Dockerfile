@@ -1,19 +1,19 @@
 FROM centos:7
 
-ENV MIRTH_CONNECT_VERSION 3.5.0.8232.b2153
+ENV MIRTH_CONNECT_VERSION 3.5.1.b194
 
 RUN yum update -y
 RUN yum install -y wget
-RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/e/epel-release-7-9.noarch.rpm && rpm -ihv epel-release-7-9.noarch.rpm \
-    && rm -f epel-release-7-9.noarch.rpm
+RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm && rpm -ihv epel-release-7-11.noarch.rpm \
+    && rm -f epel-release-7-11.noarch.rpm
 RUN yum install -y monit htop
 
 WORKDIR /opt/mirthconnect
 
 RUN wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-    "http://download.oracle.com/otn-pub/java/jdk/8u121-b13/e9e7ea248e2c4826b92b3f075a80e441/jre-8u121-linux-x64.rpm" \
-    && yum install -y jre-8u121-linux-x64.rpm \
-    && rm -f jre-8u121-linux-x64.rpm
+    "http://download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jre-9.0.4_linux-x64_bin.rpm" \
+    && yum install -y jre-9.0.4_linux-x64_bin.rpm \
+    && rm -f jre-9.0.4_linux-x64_bin.rpm
 
 RUN wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-linux.rpm \
     && yum install -y mirthconnect-$MIRTH_CONNECT_VERSION-linux.rpm \
