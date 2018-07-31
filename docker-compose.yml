@@ -2,7 +2,7 @@ version: '2'
 
 services:
   mirth:
-    image: gt50/docker-mirthconnect
+    build: .
     restart: unless-stopped
     environment:
       - TZ=America/Los_Angeles

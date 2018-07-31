@@ -1,6 +1,6 @@
 FROM centos:7
 
-ENV MIRTH_CONNECT_VERSION 3.5.2.b204
+ENV MIRTH_CONNECT_VERSION 3.6.1.b220
 
 RUN yum update -y
 RUN yum install -y wget
@@ -10,10 +10,6 @@ RUN yum install -y monit htop
 
 WORKDIR /opt/mirthconnect
 
-#RUN wget --no-cookies --no-check-certificate --header "Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie" \
-#    "http://download.oracle.com/otn-pub/java/jdk/9.0.4+11/c2514751926b4512b076cc82f959763f/jre-9.0.4_linux-x64_bin.rpm" \
-#    && yum install -y jre-9.0.4_linux-x64_bin.rpm \
-#    && rm -f jre-9.0.4_linux-x64_bin.rpm
 RUN yum install -y java-1.8.0-openjdk
 
 RUN wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconnect-$MIRTH_CONNECT_VERSION-linux.rpm \
