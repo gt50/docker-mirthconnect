@@ -1,11 +1,13 @@
 FROM centos:7
 
-ENV MIRTH_CONNECT_VERSION 3.6.1.b220
+# ENV MIRTH_CONNECT_VERSION 3.6.1.b220
+ENV MIRTH_CONNECT_VERSION 3.7.0.b2399
 
 RUN yum update -y
 RUN yum install -y wget
-RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm && rpm -ihv epel-release-7-11.noarch.rpm \
-    && rm -f epel-release-7-11.noarch.rpm
+# RUN wget http://dl.fedoraproject.org/pub/epel/7/x86_64/Packages/e/epel-release-7-11.noarch.rpm && rpm -ihv epel-release-7-11.noarch.rpm \
+#     && rm -f epel-release-7-11.noarch.rpm
+RUN yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
 RUN yum install -y monit htop
 
 WORKDIR /opt/mirthconnect
@@ -24,9 +26,9 @@ RUN wget http://downloads.mirthcorp.com/connect/$MIRTH_CONNECT_VERSION/mirthconn
 
 RUN sed -i "\$acheck process mcservice with pidfile /var/run/mcservice.pid" /etc/monitrc \
     && sed -i "\$a  start program = \"/opt/mirthconnect/mcservice start\" with timeout 60 seconds" /etc/monitrc \
-    && sed -i "\$a  stop program = \"/opt/mirthconnect/mcservice stop\"" /etc/monitrc \    
-    && sed -i "\$a  if cpu > 60% for 2 cycles then alert" /etc/monitrc \ 
-    && sed -i "\$a  if cpu > 90% for 5 cycles then restart" /etc/monitrc 
+    && sed -i "\$a  stop program = \"/opt/mirthconnect/mcservice stop\"" /etc/monitrc \
+    && sed -i "\$a  if cpu > 60% for 2 cycles then alert" /etc/monitrc \
+    && sed -i "\$a  if cpu > 90% for 5 cycles then restart" /etc/monitrc
 
 EXPOSE 80 443
 
